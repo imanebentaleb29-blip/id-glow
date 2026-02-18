@@ -6,7 +6,6 @@
     <title>ID Glow | Maquillage Infusé de Soin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap');
 
@@ -31,8 +30,8 @@
         }
 
         .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
-            url('assets/Peau après maquillage ID Glow.jpeg');
+            /* On utilise ici une des images de look pour le fond du hero */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/Maquillage%20ID%20Glow%20look%201.jpeg');
             background-size: cover;
             background-position: center;
             background-color: #d7bba3;
@@ -59,6 +58,36 @@
             background-color: var(--nude-dark);
         }
 
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--nude-brown);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .best-seller-track {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 45s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .bs-img {
             width: 40px;
             height: 40px;
@@ -67,117 +96,342 @@
             border: 1px solid var(--nude-beige);
         }
 
-        .gallery-img {
-            transition: transform 0.5s ease;
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
         }
 
+        .review-input {
+            border: 1px solid var(--nude-beige);
+            background: transparent;
+            transition: border-color 0.3s ease;
+        }
+        .review-input:focus {
+            outline: none;
+            border-color: var(--nude-brown);
+            background: white;
+        }
+        .star-rating i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-rating i.active {
+            color: #fbbf24;
+        }
+
+        .gallery-img {
+            transition: transform 0.5s ease;
+            background-color: #eee;
+        }
         .gallery-container:hover .gallery-img {
             transform: scale(1.05);
         }
-
     </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero-gradient h-[60vh] flex items-center justify-center text-white text-center">
-    <div>
-        <h1 class="text-5xl md:text-7xl italic font-bold">Glow with confidence</h1>
-    </div>
-</section>
+    <a href="https://wa.me/212604062295" target="_blank" class="whatsapp-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-<!-- BEST SELLERS -->
-<section class="py-4 overflow-hidden bg-white">
-    <div class="flex space-x-12 items-center">
-        <div class="flex items-center space-x-3">
-            <img src="assets/Fond de Teint Sérum éclat.jpeg" class="bs-img">
-            <span class="text-xs italic">Fond de Teint Sérum Éclat</span>
-        </div>
-
-        <div class="flex items-center space-x-3">
-            <img src="assets/Correcteur Soin Intense.jpeg" class="bs-img">
-            <span class="text-xs italic">Correcteur Soin Intense</span>
-        </div>
-
-        <div class="flex items-center space-x-3">
-            <img src="assets/Palette Regard Nude.jpeg" class="bs-img">
-            <span class="text-xs italic">Palette Regard Nude</span>
-        </div>
-
-        <div class="flex items-center space-x-3">
-            <img src="assets/Blush Rose Infusion.jpeg" class="bs-img">
-            <span class="text-xs italic">Blush Rose Infusion</span>
-        </div>
-    </div>
-</section>
-
-<!-- PRODUITS -->
-<section class="py-20 bg-white">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
-
-        <div class="nude-card">
-            <img src="assets/Fond de teint Sérum.jpeg" class="w-full h-96 object-cover">
-            <div class="p-6 text-center">
-                <h3>Fond de Teint Sérum</h3>
-                <p class="text-[#8e6f5a] font-bold">89,00 DH</p>
+    <!-- Barre de Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-[#e8d5c4]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="brand-font text-3xl font-bold tracking-widest text-[#8e6f5a]">ID GLOW</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#accueil" class="nav-link text-sm uppercase tracking-widest">Accueil</a>
+                    <a href="#produits" class="nav-link text-sm uppercase tracking-widest">Boutique</a>
+                    <a href="#galerie" class="nav-link text-sm uppercase tracking-widest">Inspiration</a>
+                    <a href="#avis" class="nav-link text-sm uppercase tracking-widest">Avis Clients</a>
+                    <a href="#histoire" class="nav-link text-sm uppercase tracking-widest">Notre Histoire</a>
+                </div>
+                <div class="flex items-center space-x-4 text-[#8e6f5a]">
+                    <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
+                    <div class="relative cursor-pointer">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-[#8e6f5a] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </div>
+                </div>
             </div>
         </div>
+    </nav>
 
-        <div class="nude-card">
-            <img src="assets/ILLUMINATEUR CHAMPAGNE.jpeg" class="w-full h-96 object-cover">
-            <div class="p-6 text-center">
-                <h3>Illuminateur Champagne</h3>
-                <p class="text-[#8e6f5a] font-bold">75,00 DH</p>
+    <!-- Section Hero -->
+    <section id="accueil" class="relative h-[65vh] flex items-center justify-center text-center text-white hero-gradient">
+        <div class="px-4">
+            <h1 class="text-5xl md:text-7xl mb-4 italic font-bold">Glow with confidence</h1>
+            <p class="text-xl font-light mb-8 max-w-xl mx-auto italic opacity-90">
+                L’alliance parfaite entre maquillage et soin de la peau.
+            </p>
+            <a href="#produits" class="btn-primary px-10 py-4 rounded-full text-xs uppercase tracking-widest inline-block shadow-xl">Découvrir la collection</a>
+        </div>
+    </section>
+
+    <!-- BARRE BEST SELLERS -->
+    <section class="bg-[#fcfaf9] border-b border-[#e8d5c4] py-4 overflow-hidden">
+        <div class="flex items-center space-x-8 px-4 whitespace-nowrap">
+            <div class="flex-shrink-0 font-bold text-[10px] uppercase tracking-[0.3em] text-[#8e6f5a] flex items-center border-r border-[#e8d5c4] pr-8 bg-[#fcfaf9] z-10">
+                <i class="fa-solid fa-crown mr-2"></i> Nos Best-Sellers
+            </div>
+            <div class="flex space-x-12 best-seller-track items-center">
+                <div class="flex items-center space-x-3 group">
+                    <img src="assets/Fond%20de%20teint%20Sérum%20éclat.jpeg" class="bs-img" alt="Fond de teint">
+                    <span class="text-xs italic text-gray-500">Sérum Éclat</span>
+                </div>
+                <div class="flex items-center space-x-3 group">
+                    <img src="assets/Correcteur%20Soin%20Intense.jpeg" class="bs-img" alt="Correcteur">
+                    <span class="text-xs italic text-gray-500">Correcteur Intense</span>
+                </div>
+                <div class="flex items-center space-x-3 group">
+                    <img src="assets/Palette%20Regard%20Nude.jpeg" class="bs-img" alt="Palette">
+                    <span class="text-xs italic text-gray-500">Regard Nude</span>
+                </div>
+                <div class="flex items-center space-x-3 group">
+                    <img src="assets/Blush%20Rose%20Infusion.jpeg" class="bs-img" alt="Blush">
+                    <span class="text-xs italic text-gray-500">Rose Infusion</span>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="nude-card">
-            <img src="assets/Huile à lèvres Glossy.jpeg" class="w-full h-96 object-cover">
-            <div class="p-6 text-center">
-                <h3>Huile à Lèvres Glossy</h3>
-                <p class="text-[#8e6f5a] font-bold">59,00 DH</p>
+    <!-- Boutique Complète -->
+    <section id="produits" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl brand-font mb-2 text-[#8e6f5a]">Notre Boutique</h2>
+                <div class="w-24 h-px bg-[#e8d5c4] mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Produit 1 -->
+                <div class="nude-card group">
+                    <div class="bg-[#fcfaf9] aspect-[4/5] overflow-hidden relative">
+                        <img src="assets/Fond%20de%20teint%20Sérum.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Fond de Teint Sérum">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Fond de Teint Sérum</h3>
+                        <p class="text-[#8e6f5a] font-bold">89,00 DH</p>
+                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                    </div>
+                </div>
+                <!-- Produit 2 -->
+                <div class="nude-card group">
+                    <div class="bg-[#fcfaf9] aspect-[4/5] overflow-hidden relative">
+                        <img src="assets/ILLUMINATEUR%20CHAMPAGNE.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Illuminateur Champagne">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Illuminateur Champagne</h3>
+                        <p class="text-[#8e6f5a] font-bold">75,00 DH</p>
+                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                    </div>
+                </div>
+                <!-- Produit 3 -->
+                <div class="nude-card group">
+                    <div class="bg-[#fcfaf9] aspect-[4/5] overflow-hidden relative">
+                        <img src="assets/Huile%20à%20lèvres%20Glossy.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Huile à Lèvres Glossy">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Huile à Lèvres Glossy</h3>
+                        <p class="text-[#8e6f5a] font-bold">59,00 DH</p>
+                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                    </div>
+                </div>
+                <!-- Produit 4 -->
+                <div class="nude-card group">
+                    <div class="bg-[#fcfaf9] aspect-[4/5] overflow-hidden relative">
+                        <img src="assets/Correcteur%20Soin%20Intense.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Correcteur Soin">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Correcteur Soin</h3>
+                        <p class="text-[#8e6f5a] font-bold">69,00 DH</p>
+                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="nude-card">
-            <img src="assets/Correcteur Soin Intense.jpeg" class="w-full h-96 object-cover">
-            <div class="p-6 text-center">
-                <h3>Correcteur Soin</h3>
-                <p class="text-[#8e6f5a] font-bold">69,00 DH</p>
+    <!-- GALERIE PHOTOS -->
+    <section id="galerie" class="py-24 bg-white border-t border-[#e8d5c4]">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl brand-font italic mb-16">Le Glow sous tous ses angles</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%201.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 1">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%202.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 2">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%203.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 3">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%204.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 4">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%205.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 5">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%206.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 6">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Maquillage%20ID%20Glow%20look%207.jpeg" class="gallery-img w-full h-full object-cover" alt="Look 7">
+                </div>
+                <div class="gallery-container overflow-hidden rounded-lg aspect-square">
+                    <img src="assets/Vidéo%20Tutoriel%20ID%20Glow.jpeg" class="gallery-img w-full h-full object-cover" alt="Tutoriel">
+                </div>
             </div>
         </div>
+    </section>
 
-    </div>
-</section>
-
-<!-- GALERIE -->
-<section class="py-24 bg-white">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-8">
-
-        <div class="gallery-container overflow-hidden rounded-lg">
-            <img src="assets/Maquillage ID Glow look 1.jpeg" class="gallery-img w-full h-full object-cover">
+    <!-- SECTION AVANT/APRÈS -->
+    <section class="py-20 bg-[#fcfaf9]">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <img src="assets/Peau%20avant%20maquillage.jpeg" class="rounded-xl shadow-md border-2 border-white" alt="Avant">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 mt-2 block">Naturelle</span>
+                    </div>
+                    <div class="text-center">
+                        <img src="assets/Peau%20après%20maquillage%20ID%20Glow.jpeg" class="rounded-xl shadow-md border-2 border-[#8e6f5a]" alt="Après">
+                        <span class="text-[10px] uppercase font-bold text-[#8e6f5a] mt-2 block">Avec ID Glow</span>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h2 class="text-3xl brand-font italic">Résultat Invisible</h2>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        ID Glow ne se contente pas de couvrir, il fusionne avec votre peau. Le résultat est un teint frais, lumineux et parfaitement naturel, tout en apportant l'hydratation dont votre visage a besoin.
+                    </p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="gallery-container overflow-hidden rounded-lg">
-            <img src="assets/Maquillage ID Glow look 2.jpeg" class="gallery-img w-full h-full object-cover">
+    <!-- SECTION AVIS -->
+    <section id="avis" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl brand-font italic text-center mb-16">Témoignages Clients</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-[#fcfaf9] p-6 rounded-2xl border border-[#e8d5c4]/30">
+                    <div class="flex text-yellow-500 text-[10px] mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-sm italic text-gray-600">"La texture est divine, on oublie qu'on porte du maquillage."</p>
+                    <p class="mt-4 font-bold text-[10px] uppercase tracking-widest">- Sofia R.</p>
+                </div>
+                <div class="bg-[#fcfaf9] p-6 rounded-2xl border border-[#e8d5c4]/30">
+                    <div class="flex text-yellow-500 text-[10px] mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-sm italic text-gray-600">"Enfin des produits abordables qui respectent ma peau sensible."</p>
+                    <p class="mt-4 font-bold text-[10px] uppercase tracking-widest">- Mélissa T.</p>
+                </div>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-[2rem] shadow-sm border border-[#e8d5c4]">
+                <form id="reviewForm" class="space-y-6">
+                    <div class="star-rating flex justify-center space-x-2 text-xl text-gray-200 mb-6">
+                        <i class="fa-solid fa-star" data-value="1"></i>
+                        <i class="fa-solid fa-star" data-value="2"></i>
+                        <i class="fa-solid fa-star" data-value="3"></i>
+                        <i class="fa-solid fa-star" data-value="4"></i>
+                        <i class="fa-solid fa-star" data-value="5"></i>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <input type="text" placeholder="Prénom" class="w-full p-4 rounded-xl review-input text-sm" required>
+                        <select class="w-full p-4 rounded-xl review-input text-sm cursor-pointer">
+                            <option>Produit testé : Fond de Teint</option>
+                            <option>Produit testé : Illuminateur</option>
+                            <option>Produit testé : Huile à Lèvres</option>
+                        </select>
+                    </div>
+                    <textarea rows="3" placeholder="Votre expérience..." class="w-full p-4 rounded-xl review-input text-sm resize-none" required></textarea>
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary px-12 py-4 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">Publier mon avis</button>
+                    </div>
+                </form>
+                <div id="successMsg" class="hidden text-center text-green-600 text-xs italic mt-4">Merci pour votre retour ! ✨</div>
+            </div>
         </div>
+    </section>
 
-        <div class="gallery-container overflow-hidden rounded-lg">
-            <img src="assets/Maquillage ID Glow look 3.jpeg" class="gallery-img w-full h-full object-cover">
+    <!-- Notre Histoire -->
+    <section id="histoire" class="py-24 px-4 bg-[#fcfaf9]">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <!-- On peut réutiliser un look de la galerie ici à défaut d'avoir une photo dédiée Imane/Douae dans la liste actuelle -->
+            <img src="assets/Maquillage%20ID%20Glow%20look%207.jpeg" alt="Fondatrices" class="rounded-2xl shadow-xl">
+            <div>
+                <h2 class="text-4xl mb-8 italic">Par Imane & Douae</h2>
+                <p class="text-gray-600 leading-relaxed text-sm mb-8">
+                    Notre mission est de rendre le maquillage infusé de soin accessible à toutes les femmes marocaines. Glow with us, Glow with ID.
+                </p>
+                <a href="#produits" class="text-[#8e6f5a] border-b border-[#e8d5c4] pb-1 text-xs uppercase tracking-widest font-bold">Découvrir les produits</a>
+            </div>
         </div>
+    </section>
 
-        <div class="gallery-container overflow-hidden rounded-lg">
-            <img src="assets/Maquillage ID Glow look 4.jpeg" class="gallery-img w-full h-full object-cover">
+    <!-- Footer -->
+    <footer class="bg-white py-20 border-t border-[#e8d5c4]">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-12 text-sm text-center md:text-left">
+            <div class="space-y-4">
+                <span class="brand-font text-3xl font-bold text-[#8e6f5a]">ID GLOW</span>
+                <div class="flex justify-center md:justify-start space-x-6 text-[#8e6f5a] text-xl">
+                    <a href="https://www.instagram.com/id__glow?igsh=MTFiMDh0dndmMWRi&utm_source=qr" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/212604062295" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold uppercase text-[10px] tracking-widest mb-6 text-gray-400">Liens</h4>
+                <ul class="space-y-3 text-gray-600">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#produits">Boutique</a></li>
+                    <li><a href="#galerie">Inspiration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold uppercase text-[10px] tracking-widest mb-6 text-gray-400">Contact</h4>
+                <p class="text-[#8e6f5a]">eclatfemme736@gmail.com</p>
+                <p class="text-[#8e6f5a] font-bold text-lg mt-2">06 04 06 22 95</p>
+            </div>
         </div>
+        <div class="text-center mt-12 text-[9px] text-gray-300 uppercase tracking-widest">
+            © 2024 ID GLOW — Sublimer, Respecter, Rayonner.
+        </div>
+    </footer>
 
-    </div>
-</section>
+    <script>
+        const stars = document.querySelectorAll('.star-rating i');
+        let rating = 0;
+        stars.forEach(s => {
+            s.onclick = () => {
+                rating = s.dataset.value;
+                updateStars();
+            };
+            s.onmouseover = () => updateStars(s.dataset.value);
+            s.onmouseleave = () => updateStars(rating);
+        });
+        function updateStars(val = rating) {
+            stars.forEach(s => s.classList.toggle('active', s.dataset.value <= val));
+        }
 
-<!-- HISTOIRE -->
-<section class="py-24 bg-white text-center">
-    <img src="assets/Peau avant maquillage.jpeg" class="mx-auto rounded-2xl shadow-xl w-80">
-    <h2 class="text-4xl italic mt-8">Par Imane & Douae</h2>
-</section>
-
+        document.getElementById('reviewForm').onsubmit = e => {
+            e.preventDefault();
+            e.target.style.display = 'none';
+            document.getElementById('successMsg').classList.remove('hidden');
+        };
+    </script>
 </body>
 </html>
