@@ -23,6 +23,7 @@
             background-color: var(--nude-light);
             color: var(--nude-dark);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, .brand-font {
@@ -30,7 +31,6 @@
         }
 
         .hero-gradient {
-            /* On utilise ici une des images de look pour le fond du hero */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/Maquillage%20ID%20Glow%20look%201.jpeg');
             background-size: cover;
             background-position: center;
@@ -139,6 +139,22 @@
         .gallery-container:hover .gallery-img {
             transform: scale(1.05);
         }
+
+        /* Styles Panier */
+        #cart-drawer {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #cart-drawer.open {
+            transform: translateX(0);
+        }
+        .cart-overlay {
+            display: none;
+            background: rgba(0,0,0,0.5);
+        }
+        .cart-overlay.open {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -146,6 +162,31 @@
     <a href="https://wa.me/212604062295" target="_blank" class="whatsapp-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- Overlay Panier -->
+    <div id="cart-overlay" class="cart-overlay fixed inset-0 z-[60]" onclick="toggleCart()"></div>
+
+    <!-- Tiroir Panier -->
+    <div id="cart-drawer" class="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-[#e8d5c4] flex justify-between items-center">
+            <h2 class="brand-font text-2xl text-[#8e6f5a]">Votre Panier</h2>
+            <button onclick="toggleCart()" class="text-2xl text-[#8e6f5a]">&times;</button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
+            <!-- Items injectés ici -->
+            <p class="text-center text-gray-400 italic py-10">Votre panier est vide</p>
+        </div>
+        <div class="p-6 border-t border-[#e8d5c4] bg-[#fcfaf9]">
+            <div class="flex justify-between mb-4">
+                <span class="uppercase tracking-widest text-xs font-bold">Total</span>
+                <span id="cart-total" class="font-bold text-[#8e6f5a]">0,00 DH</span>
+            </div>
+            <button onclick="validateOrder()" class="w-full btn-primary py-4 rounded-full text-xs uppercase tracking-widest font-bold flex items-center justify-center space-x-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Valider sur WhatsApp</span>
+            </button>
+        </div>
+    </div>
 
     <!-- Barre de Navigation -->
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-[#e8d5c4]">
@@ -163,9 +204,9 @@
                 </div>
                 <div class="flex items-center space-x-4 text-[#8e6f5a]">
                     <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
-                    <div class="relative cursor-pointer">
+                    <div class="relative cursor-pointer" onclick="toggleCart()">
                         <i class="fa-solid fa-bag-shopping text-xl"></i>
-                        <span class="absolute -top-2 -right-2 bg-[#8e6f5a] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-[#8e6f5a] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </div>
                 </div>
             </div>
@@ -227,7 +268,10 @@
                     <div class="p-6 text-center">
                         <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Fond de Teint Sérum</h3>
                         <p class="text-[#8e6f5a] font-bold">89,00 DH</p>
-                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        <div class="flex items-center justify-center space-x-2 mt-4">
+                            <input type="number" value="1" min="1" class="w-12 border border-[#e8d5c4] text-center text-sm p-1 rounded qty-input" id="qty-1">
+                            <button onclick="addToCart('Fond de Teint Sérum', 89, 'assets/Fond%20de%20teint%20Sérum.jpeg', 'qty-1')" class="flex-1 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Produit 2 -->
@@ -238,7 +282,10 @@
                     <div class="p-6 text-center">
                         <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Illuminateur Champagne</h3>
                         <p class="text-[#8e6f5a] font-bold">75,00 DH</p>
-                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        <div class="flex items-center justify-center space-x-2 mt-4">
+                            <input type="number" value="1" min="1" class="w-12 border border-[#e8d5c4] text-center text-sm p-1 rounded qty-input" id="qty-2">
+                            <button onclick="addToCart('Illuminateur Champagne', 75, 'assets/ILLUMINATEUR%20CHAMPAGNE.jpeg', 'qty-2')" class="flex-1 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Produit 3 -->
@@ -249,7 +296,10 @@
                     <div class="p-6 text-center">
                         <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Huile à Lèvres Glossy</h3>
                         <p class="text-[#8e6f5a] font-bold">59,00 DH</p>
-                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        <div class="flex items-center justify-center space-x-2 mt-4">
+                            <input type="number" value="1" min="1" class="w-12 border border-[#e8d5c4] text-center text-sm p-1 rounded qty-input" id="qty-3">
+                            <button onclick="addToCart('Huile à Lèvres Glossy', 59, 'assets/Huile%20à%20lèvres%20Glossy.jpeg', 'qty-3')" class="flex-1 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Produit 4 -->
@@ -260,7 +310,10 @@
                     <div class="p-6 text-center">
                         <h3 class="font-medium text-base mb-1 uppercase tracking-tight">Correcteur Soin</h3>
                         <p class="text-[#8e6f5a] font-bold">69,00 DH</p>
-                        <button class="w-full mt-4 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        <div class="flex items-center justify-center space-x-2 mt-4">
+                            <input type="number" value="1" min="1" class="w-12 border border-[#e8d5c4] text-center text-sm p-1 rounded qty-input" id="qty-4">
+                            <button onclick="addToCart('Correcteur Soin', 69, 'assets/Correcteur%20Soin%20Intense.jpeg', 'qty-4')" class="flex-1 bg-[#8e6f5a] text-white py-2 text-[10px] uppercase tracking-widest">Ajouter</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -371,7 +424,6 @@
     <!-- Notre Histoire -->
     <section id="histoire" class="py-24 px-4 bg-[#fcfaf9]">
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <!-- On peut réutiliser un look de la galerie ici à défaut d'avoir une photo dédiée Imane/Douae dans la liste actuelle -->
             <img src="assets/Maquillage%20ID%20Glow%20look%207.jpeg" alt="Fondatrices" class="rounded-2xl shadow-xl">
             <div>
                 <h2 class="text-4xl mb-8 italic">Par Imane & Douae</h2>
@@ -413,6 +465,91 @@
     </footer>
 
     <script>
+        // Logique du Panier
+        let cart = [];
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            document.getElementById('cart-overlay').classList.toggle('open');
+        }
+
+        function addToCart(name, price, image, qtyId) {
+            const qty = parseInt(document.getElementById(qtyId).value);
+            const existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += qty;
+            } else {
+                cart.push({ name, price, image, quantity: qty });
+            }
+            
+            updateCartUI();
+            toggleCart(); // Ouvrir le panier après ajout
+            document.getElementById(qtyId).value = 1; // Reset quantité
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const countEl = document.getElementById('cart-count');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400 italic py-10">Votre panier est vide</p>';
+                totalEl.innerText = '0,00 DH';
+                countEl.innerText = '0';
+                return;
+            }
+
+            let total = 0;
+            let count = 0;
+            container.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+                
+                container.innerHTML += `
+                    <div class="flex items-center space-x-4">
+                        <img src="${item.image}" class="w-16 h-20 object-cover rounded shadow-sm">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold uppercase tracking-tight">${item.name}</h4>
+                            <p class="text-[#8e6f5a] text-xs">${item.price},00 DH x ${item.quantity}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-400"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+            });
+
+            totalEl.innerText = total.toFixed(2) + ' DH';
+            countEl.innerText = count;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function validateOrder() {
+            if (cart.length === 0) return;
+
+            let message = "*Nouvelle Commande ID Glow*\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                message += `• ${item.name} (x${item.quantity}) - ${item.price * item.quantity} DH\n`;
+                total += item.price * item.quantity;
+            });
+
+            message += `\n*TOTAL : ${total} DH*`;
+            message += `\n\nMerci de me confirmer la disponibilité pour valider ma commande ! ✨`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/212604062295?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Avis Clients
         const stars = document.querySelectorAll('.star-rating i');
         let rating = 0;
         stars.forEach(s => {
