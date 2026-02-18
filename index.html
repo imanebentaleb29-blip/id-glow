@@ -159,7 +159,7 @@
 </head>
 <body>
 
-    <a href="https://wa.me/212604062295" target="_blank" class="whatsapp-float">
+    <a href="https://wa.me/212604062294" target="_blank" class="whatsapp-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -442,7 +442,7 @@
                 <span class="brand-font text-3xl font-bold text-[#8e6f5a]">ID GLOW</span>
                 <div class="flex justify-center md:justify-start space-x-6 text-[#8e6f5a] text-xl">
                     <a href="https://www.instagram.com/id__glow?igsh=MTFiMDh0dndmMWRi&utm_source=qr" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://wa.me/212604062295" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://wa.me/212604062294" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             </div>
             <div>
@@ -456,7 +456,7 @@
             <div>
                 <h4 class="font-bold uppercase text-[10px] tracking-widest mb-6 text-gray-400">Contact</h4>
                 <p class="text-[#8e6f5a]">eclatfemme736@gmail.com</p>
-                <p class="text-[#8e6f5a] font-bold text-lg mt-2">06 04 06 22 95</p>
+                <p class="text-[#8e6f5a] font-bold text-lg mt-2">06 04 06 22 94</p>
             </div>
         </div>
         <div class="text-center mt-12 text-[9px] text-gray-300 uppercase tracking-widest">
@@ -474,7 +474,8 @@
         }
 
         function addToCart(name, price, image, qtyId) {
-            const qty = parseInt(document.getElementById(qtyId).value);
+            const qtyInput = document.getElementById(qtyId);
+            const qty = parseInt(qtyInput.value) || 1;
             const existingItem = cart.find(item => item.name === name);
 
             if (existingItem) {
@@ -485,7 +486,7 @@
             
             updateCartUI();
             toggleCart(); // Ouvrir le panier après ajout
-            document.getElementById(qtyId).value = 1; // Reset quantité
+            qtyInput.value = 1; // Reset quantité
         }
 
         function updateCartUI() {
@@ -544,7 +545,8 @@
             message += `\n\nMerci de me confirmer la disponibilité pour valider ma commande ! ✨`;
 
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/212604062295?text=${encodedMessage}`;
+            // Numéro mis à jour ici également
+            const whatsappUrl = `https://wa.me/212604062294?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
         }
