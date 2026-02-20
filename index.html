@@ -167,7 +167,7 @@
     <div id="cart-overlay" class="cart-overlay fixed inset-0 z-[60]" onclick="toggleCart()"></div>
 
     <!-- Tiroir Panier -->
-    <div id="cart-drawer" class="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl flex flex-col">
+    <div id="cart-drawer" class="fixed right-0 top-0 h-full p-0 w-full max-w-md bg-white z-[70] shadow-2xl flex flex-col">
         <div class="p-6 border-b border-[#e8d5c4] flex justify-between items-center">
             <h2 class="brand-font text-2xl text-[#8e6f5a]">Votre Panier</h2>
             <button onclick="toggleCart()" class="text-2xl text-[#8e6f5a]">&times;</button>
@@ -421,14 +421,17 @@
         </div>
     </section>
 
-    <!-- Notre Histoire -->
+    <!-- Notre Histoire (MIS À JOUR) -->
     <section id="histoire" class="py-24 px-4 bg-[#fcfaf9]">
-        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <img src="assets/Maquillage%20ID%20Glow%20look%207.jpeg" alt="Fondatrices" class="rounded-2xl shadow-xl">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <img src="assets/Maquillage%20ID%20Glow%20look%207.jpeg" alt="Fondatrices Imane & Douae" class="rounded-2xl shadow-xl">
             <div>
                 <h2 class="text-4xl mb-8 italic">Par Imane & Douae</h2>
+                <p class="text-gray-600 leading-relaxed text-sm mb-6">
+                    ID Glow est une marque marocaine de maquillage innovante, fondée par Imane et Douae, née de notre passion pour le make-up et le skincare. Nous avons créé ID Glow pour proposer des produits cosmétiques au Maroc qui combinent maquillage et actifs inspirés du soin de la peau, afin d’offrir un maquillage hydratant, confortable et performant. 
+                </p>
                 <p class="text-gray-600 leading-relaxed text-sm mb-8">
-                    Notre mission est de rendre le maquillage infusé de soin accessible à toutes les femmes marocaines. Glow with us, Glow with ID.
+                    Notre objectif est de développer une marque beauté marocaine moderne et accessible, qui sublime la beauté naturelle tout en respectant la peau. Avec ID Glow, nous proposons un make-up enrichi en skincare, pensé pour les femmes qui veulent briller avec confiance et élégance.
                 </p>
                 <a href="#produits" class="text-[#8e6f5a] border-b border-[#e8d5c4] pb-1 text-xs uppercase tracking-widest font-bold">Découvrir les produits</a>
             </div>
@@ -545,7 +548,6 @@
             message += `\n\nMerci de me confirmer la disponibilité pour valider ma commande ! ✨`;
 
             const encodedMessage = encodeURIComponent(message);
-            // Numéro mis à jour ici également
             const whatsappUrl = `https://wa.me/212604062294?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
